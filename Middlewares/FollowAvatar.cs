@@ -17,14 +17,16 @@ namespace Camera2.Configuration {
 namespace Camera2.Middlewares {
 	class FollowAvatar : CamMiddleware, IMHandler {
 
+		Transformer transformer;
+
 		new public bool Pre() {
 			if(!settings.FollowAvatar.followAvatar || settings.type == Configuration.CameraType.FirstPerson)
 				return true;
 
+			transformer ??= cam.transformchain.AddOrGet("FollowAvatar", TransformerOrders.FollowAvatar, true);
+
 			Transform theTransform = cam.UCamera.transform;
 			Transform target = Camera.main.transform;
-
-			var transformer = cam.transformchain.AddOrGet("FollowAvatar", TransformerOrders.FollowAvatar, true);
 
 			var relativePosition = target.position + settings.FollowAvatar.offset - theTransform.position;
 			var rotation = Quaternion.LookRotation(relativePosition, Vector3.up);
