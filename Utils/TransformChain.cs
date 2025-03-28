@@ -9,6 +9,7 @@ namespace Camera2.Utils {
 		public static int SmoothFollow = -500;
 		public static int PositionOffset = -400;
 		public static int Follow360 = -300;
+		public static int FollowAvatar = -200;
 		public static int MovementScriptProcessor = 0;
 	}
 
@@ -23,6 +24,7 @@ namespace Camera2.Utils {
 		public int order = 0;
 
 		public bool applyAsAbsolute = false;
+		public bool applyAsAbsoluteRotation = false;
 	}
 
 	class TransformChain {
@@ -116,7 +118,9 @@ namespace Camera2.Utils {
 					position += x.applyAsAbsolute ? x.position : rotation * x.position;
 
 				if(x.rotation != Quaternion.identity) {
-					if(!x.applyAsAbsolute) {
+					if(x.applyAsAbsoluteRotation) {
+						rotation = x.rotation;
+					} else if(!x.applyAsAbsolute) {
 						rotation *= x.rotation;
 					} else {
 						rotation = x.rotation * rotation;
