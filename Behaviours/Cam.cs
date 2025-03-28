@@ -166,7 +166,8 @@ namespace Camera2.Behaviours {
 				MakeMiddleware<ModmapExtensions>(),
 				MakeMiddleware<Follow360>(),
 				MakeMiddleware<MovementScriptProcessor>(),
-				MakeMiddleware<VMCAvatar>()
+				MakeMiddleware<VMCAvatar>(),
+				MakeMiddleware<FollowAvatar>(),
 			};
 
 			camClone.AddComponent<CamPostProcessor>().Init(this);
